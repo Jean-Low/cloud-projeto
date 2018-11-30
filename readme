@@ -1,0 +1,2 @@
+run with:
+FLASK_APP=rest.py flask run
