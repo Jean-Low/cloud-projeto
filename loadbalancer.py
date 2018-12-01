@@ -92,7 +92,7 @@ def catch_all(path):
 
 def update():
     global setup_instances
-    print("Status checking")
+    print("\n---Status checking---")
     iplist = active_instances.keys()
     ips_to_remove = []
     for ip in iplist:
@@ -123,6 +123,7 @@ def update():
         if(dif < 0):
             print("The are more machines than desired, reducing")
             iplist = active_instances.keys()
+            ips_to_remove = []
             for ip in iplist:
                 print("--Removing {}".format(ip))
                 instanceIds = []
@@ -134,12 +135,15 @@ def update():
                     print("Could not terminate instance {}".format(ip))
                     print("Manual check required")
                     print("Removed from loadbalacer anyways")
-                active_instances.pop(ip,None)
-                print("Removed")
+                ips_to_remove.append(ip)
                 dif += 1
                 if dif == 0:
                     break
                     
+            for ip in ips_to_remove:
+                active_instances.pop(ip,None)
+                print("Removed {}".format(ip))
+                
         elif (dif > 0):
             if(len(setup_instances) > 0):
                 amount = len(setup_instances)
@@ -162,8 +166,6 @@ def update():
                             print("A new machine is running. ({})".format(setup_instances[i][0].id))
                             active_instances[ip] = setup_instances[i][0].id
                             setup_instances.pop(i)
-                            print(setup_instances)
-                            print(active_instances)
                         else:
                             print("Machine {} is still waiting for server...".format(setup_instances[i][0].id))
                             
