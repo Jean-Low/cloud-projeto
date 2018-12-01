@@ -19,7 +19,7 @@ secret_key = sys.argv[3]
 
 ec2Resource = boto3.resource('ec2',region_name = "us-east-1", aws_access_key_id = access_key, aws_secret_access_key = secret_key)
 
-ec2 = boto3.client('ec2')
+ec2 = boto3.client('ec2', region_name = "us-east-1", aws_access_key_id = access_key, aws_secret_access_key = secret_key)
 
 waiter = ec2.get_waiter('instance_terminated')
 
