@@ -90,5 +90,7 @@ tasks = {}
 tasks[0] = {"foo" : "foo service is on", "bar" : "chocolate..."}
 
 
+if __name__ == '__main__':
+    app.run(debug = False, host="0.0.0.0", port=5000)
 
 
