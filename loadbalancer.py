@@ -79,8 +79,25 @@ def create_instances(amount):
 @app.route('/', defaults={"path":''})
 @app.route('/<path:path>')
 def catch_all(path):
+    global desired_amount
     if(path == "healthcheck"):
         return ('ok',200)
+    
+    if(path == "checkamount"):
+        return ('The desired amount is currently {}'.format(desired_amount))
+    
+    splited = path.split('/')
+    print(splited)
+    if(splited[0] == "setamount"):
+        amount = None
+        try:
+            amount = int(splited[1])
+        except:
+            amount = None
+        if(amount == None):
+            return ('ERROR: Invalid amount')
+        desired_amount = amount
+        return ("updated desired amount",200)
     
     choice = random.choice(list(active_instances.keys()))
     
